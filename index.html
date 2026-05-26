@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lumière — Fine Fragrances</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --dark: #1a1a1a;
+      --dark-mid: #2a2a2a;
+      --cream: #f9f5ef;
+      --text-light: #888;
+    }
+
+    body {
+      font-family: 'Georgia', serif;
+      background-color: var(--cream);
+      color: var(--dark);
+    }
+
+    /* NAV */
+    nav {
+      background-color: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 60px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      letter-spacing: 6px;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 36px;
+    }
+
+    .nav-links a {
+      color: #ccc;
+      text-decoration: none;
+      font-family: 'Arial', sans-serif;
+      font-size: 0.82rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .cart-btn {
+      background: none;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 8px 20px;
+      font-size: 0.78rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .cart-btn:hover {
+      background: var(--gold);
+      color: var(--dark);
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #1a1a1a 0%, #2e2416 50%, #1a1a1a 100%);
+      min-height: 88vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(201,168,76,0.12) 0%, transparent 70%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Arial', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 6px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      color: #f5f0e8;
+      line-height: 1.15;
+      margin-bottom: 24px;
+      font-weight: normal;
+    }
+
+    .hero h1 em {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .hero p {
+      color: #aaa;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 40px;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--dark);
+      padding: 14px 38px;
+      font-size: 0.82rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      font-family: 'Arial', sans-serif;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-light);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #ccc;
+      padding: 14px 38px;
+      font-size: 0.82rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: 1px solid #555;
+      cursor: pointer;
+      font-family: 'Arial', sans-serif;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* SECTION HEADER */
+    .section-header {
+      text-align: center;
+      margin-bottom: 52px;
+    }
+
+    .section-header .eyebrow {
+      font-family: 'Arial', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 5px;
+      color: var(--gold);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: normal;
+      color: var(--dark);
+    }
+
+    /* FEATURED */
+    .featured {
+      padding: 90px 60px;
+      background: var(--cream);
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 36px;
+    }
+
+    .product-card {
+      background: #fff;
+      overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s;
+      cursor: pointer;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 18px 48px rgba(0,0,0,0.10);
+    }
+
+    .product-img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: block;
+      background: linear-gradient(145deg, #e8dfd0, #c9bfaf);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* SVG bottle illustration per card */
+    .bottle-wrap {
+      width: 100%;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bottle-wrap svg {
+      height: 200px;
+      width: auto;
+      filter: drop-shadow(0 8px 24px rgba(0,0,0,0.18));
+    }
+
+    .product-info {
+      padding: 22px 24px 28px;
+    }
+
+    .product-badge {
+      font-family: 'Arial', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .product-name {
+      font-size: 1.15rem;
+      font-weight: normal;
+      margin-bottom: 6px;
+    }
+
+    .product-desc {
+      font-family: 'Arial', sans-serif;
+      font-size: 0.82rem;
+      color: var(--text-light);
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .product-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .product-price {
+      font-size: 1.2rem;
+      color: var(--dark);
+    }
+
+    .add-btn {
+      background: var(--dark);
+      color: #fff;
+      border: none;
+      padding: 9px 18px;
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: 'Arial', sans-serif;
+      transition: background 0.2s;
+    }
+
+    .add-btn:hover {
+      background: var(--gold);
+      color: var(--dark);
+    }
+
+    /* BANNER */
+    .banner {
+      background: var(--dark);
+      padding: 80px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .banner-text h2 {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      color: #f5f0e8;
+      font-weight: normal;
+      margin-bottom: 12px;
+    }
+
+    .banner-text p {
+      color: #888;
+      font-family: 'Arial', sans-serif;
+      font-size: 0.92rem;
+      line-height: 1.7;
+      max-width: 460px;
+    }
+
+    /* CATEGORIES */
+    .categories {
+      padding: 90px 60px;
+      background: #f2ece2;
+    }
+
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .cat-card {
+      padding: 48px 32px;
+      text-align: center;
+      background: #fff;
+      cursor: pointer;
+      transition: background 0.2s;
+      border-top: 3px solid transparent;
+    }
+
+    .cat-card:hover {
+      border-top-color: var(--gold);
+    }
+
+    .cat-icon {
+      font-size: 2.4rem;
+      margin-bottom: 16px;
+    }
+
+    .cat-card h3 {
+      font-size: 1.1rem;
+      font-weight: normal;
+      margin-bottom: 8px;
+    }
+
+    .cat-card p {
+      font-family: 'Arial', sans-serif;
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+
+    /* TESTIMONIALS */
+    .testimonials {
+      padding: 90px 60px;
+      background: var(--cream);
+    }
+
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 28px;
+    }
+
+    .testi-card {
+      background: #fff;
+      padding: 32px 28px;
+      border-left: 3px solid var(--gold);
+    }
+
+    .stars {
+      color: var(--gold);
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+      letter-spacing: 2px;
+    }
+
+    .testi-card blockquote {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: #555;
+      margin-bottom: 18px;
+      font-style: italic;
+    }
+
+    .testi-author {
+      font-family: 'Arial', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-light);
+    }
+
+    /* NEWSLETTER */
+    .newsletter {
+      background: linear-gradient(135deg, #2a1f0f, #1a1a1a);
+      padding: 80px 60px;
+      text-align: center;
+    }
+
+    .newsletter h2 {
+      color: #f5f0e8;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: normal;
+      margin-bottom: 12px;
+    }
+
+    .newsletter p {
+      color: #888;
+      font-family: 'Arial', sans-serif;
+      font-size: 0.9rem;
+      margin-bottom: 32px;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 0;
+      max-width: 460px;
+      margin: 0 auto;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 14px 20px;
+      border: 1px solid #444;
+      background: #111;
+      color: #ccc;
+      font-size: 0.88rem;
+      font-family: 'Arial', sans-serif;
+      outline: none;
+    }
+
+    .newsletter-form input::placeholder {
+      color: #555;
+    }
+
+    .newsletter-form button {
+      background: var(--gold);
+      color: var(--dark);
+      border: none;
+      padding: 14px 28px;
+      font-size: 0.78rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: 'Arial', sans-serif;
+      transition: background 0.2s;
+    }
+
+    .newsletter-form button:hover {
+      background: var(--gold-light);
+    }
+
+    /* FOOTER */
+    footer {
+      background: #111;
+      padding: 60px 60px 30px;
+      color: #666;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand .logo {
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    .footer-brand p {
+      font-family: 'Arial', sans-serif;
+      font-size: 0.82rem;
+      line-height: 1.8;
+      color: #555;
+      max-width: 240px;
+    }
+
+    footer h4 {
+      font-family: 'Arial', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: 18px;
+    }
+
+    footer ul {
+      list-style: none;
+    }
+
+    footer ul li {
+      margin-bottom: 10px;
+    }
+
+    footer ul a {
+      color: #555;
+      text-decoration: none;
+      font-family: 'Arial', sans-serif;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+
+    footer ul a:hover {
+      color: var(--gold);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #222;
+      padding-top: 28px;
+      text-align: center;
+      font-family: 'Arial', sans-serif;
+      font-size: 0.78rem;
+      color: #444;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .featured, .categories, .testimonials, .newsletter, footer { padding-left: 24px; padding-right: 24px; }
+      .banner { padding: 60px 24px; }
+      .cat-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .cat-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .newsletter-form { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span class="logo">Lumière</span>
+    <ul class="nav-links">
+      <li><a href="#">Shop</a></li>
+      <li><a href="#">Collections</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Journal</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="cart-btn">Cart (0)</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow">Luxury Fine Fragrances</p>
+      <h1>Wear Your<br><em>Invisible Signature</em></h1>
+      <p>Handcrafted perfumes inspired by the world's most evocative places.<br>
+         Each bottle holds a story waiting to become yours.</p>
+      <div class="hero-btns">
+        <button class="btn-primary">Explore Collection</button>
+        <button class="btn-outline">Our Story</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PRODUCTS -->
+  <section class="featured">
+    <div class="section-header">
+      <span class="eyebrow">Bestsellers</span>
+      <h2>Most Coveted Fragrances</h2>
+    </div>
+
+    <div class="products-grid">
+
+      <!-- Product 1 -->
+      <div class="product-card">
+        <div class="bottle-wrap" style="background: linear-gradient(145deg, #1a1a2e, #16213e);">
+          <svg viewBox="0 0 80 180" xmlns="http://www.w3.org/2000/svg">
+            <rect x="30" y="8" width="20" height="12" rx="3" fill="#c9a84c"/>
+            <rect x="33" y="4" width="14" height="6" rx="2" fill="#e8c97a"/>
+            <path d="M18 50 Q15 90 15 130 Q15 162 40 162 Q65 162 65 130 Q65 90 62 50 Z" fill="#1e3a5f" opacity="0.9"/>
+            <path d="M28 20 Q25 35 22 50 L58 50 Q55 35 52 20 Z" fill="#c9a84c"/>
+            <path d="M20 80 Q18 110 18 130 Q18 155 40 155 Q62 155 62 130 Q62 110 60 80 Z" fill="#2563a8" opacity="0.5"/>
+            <text x="40" y="118" text-anchor="middle" font-size="7" fill="#e8c97a" font-family="serif">NUIT</text>
+            <text x="40" y="128" text-anchor="middle" font-size="5" fill="#c9a84c" font-family="serif">DE PARIS</text>
+          </svg>
+        </div>
+        <div class="product-info">
+          <span class="product-badge">Eau de Parfum</span>
+          <h3 class="product-name">Nuit de Paris</h3>
+          <p class="product-desc">Bergamot, smoky oud, and midnight jasmine — a bold nocturnal journey.</p>
+          <div class="product-footer">
+            <span class="product-price">$185</span>
+            <button class="add-btn">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="product-card">
+        <div class="bottle-wrap" style="background: linear-gradient(145deg, #f5e6d0, #e8d5b0);">
+          <svg viewBox="0 0 80 180" xmlns="http://www.w3.org/2000/svg">
+            <rect x="31" y="7" width="18" height="13" rx="2" fill="#8b6914"/>
+            <rect x="34" y="3" width="12" height="6" rx="3" fill="#c9a84c"/>
+            <path d="M20 48 Q17 88 17 128 Q17 160 40 160 Q63 160 63 128 Q63 88 60 48 Z" fill="#f8f0e3"/>
+            <path d="M29 20 Q26 34 23 48 L57 48 Q54 34 51 20 Z" fill="#d4a853"/>
+            <ellipse cx="40" cy="95" rx="16" ry="20" fill="#f0e0c0" opacity="0.6"/>
+            <text x="40" y="116" text-anchor="middle" font-size="6.5" fill="#8b5e3c" font-family="serif">ROSE</text>
+            <text x="40" y="126" text-anchor="middle" font-size="5" fill="#c9a84c" font-family="serif">IMPÉRIALE</text>
+          </svg>
+        </div>
+        <div class="product-info">
+          <span class="product-badge">Eau de Parfum</span>
+          <h3 class="product-name">Rose Impériale</h3>
+          <p class="product-desc">Damask rose, white musk, and warm amber — timeless, radiant femininity.</p>
+          <div class="product-footer">
+            <span class="product-price">$210</span>
+            <button class="add-btn">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="product-card">
+        <div class="bottle-wrap" style="background: linear-gradient(145deg, #0f2027, #1a3a2a);">
+          <svg viewBox="0 0 80 180" xmlns="http://www.w3.org/2000/svg">
+            <rect x="30" y="8" width="20" height="12" rx="4" fill="#4a7c59"/>
+            <rect x="33" y="4" width="14" height="6" rx="2" fill="#6db87e"/>
+            <rect x="17" y="48" width="46" height="115" rx="6" fill="#1b4332"/>
+            <rect x="20" y="48" width="40" height="18" rx="2" fill="#2d6a4f"/>
+            <rect x="22" y="75" width="36" height="1" fill="#4a7c59" opacity="0.5"/>
+            <text x="40" y="118" text-anchor="middle" font-size="6.5" fill="#a7d7a0" font-family="serif">FORÊT</text>
+            <text x="40" y="128" text-anchor="middle" font-size="5" fill="#6db87e" font-family="serif">VERTE</text>
+            <rect x="22" y="138" width="36" height="1" fill="#4a7c59" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="product-info">
+          <span class="product-badge">Eau de Toilette</span>
+          <h3 class="product-name">Forêt Verte</h3>
+          <p class="product-desc">Cedarwood, pine resin, and vetiver — earthy, fresh, and unapologetically wild.</p>
+          <div class="product-footer">
+            <span class="product-price">$155</span>
+            <button class="add-btn">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 4 -->
+      <div class="product-card">
+        <div class="bottle-wrap" style="background: linear-gradient(145deg, #2d1b4e, #4a1942);">
+          <svg viewBox="0 0 80 180" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="40" cy="12" rx="10" ry="8" fill="#c9a84c"/>
+            <ellipse cx="40" cy="8" rx="6" ry="4" fill="#e8c97a"/>
+            <path d="M15 52 Q12 92 12 132 Q12 165 40 165 Q68 165 68 132 Q68 92 65 52 Z" fill="#6b21a8" opacity="0.9"/>
+            <path d="M25 22 Q22 37 19 52 L61 52 Q58 37 55 22 Z" fill="#c9a84c"/>
+            <path d="M18 90 Q16 120 16 135 Q16 158 40 158 Q64 158 64 135 Q64 120 62 90 Z" fill="#9333ea" opacity="0.4"/>
+            <text x="40" y="118" text-anchor="middle" font-size="6" fill="#e8c97a" font-family="serif">VELVET</text>
+            <text x="40" y="128" text-anchor="middle" font-size="5" fill="#c9a84c" font-family="serif">NOIR</text>
+          </svg>
+        </div>
+        <div class="product-info">
+          <span class="product-badge">Extrait de Parfum</span>
+          <h3 class="product-name">Velvet Noir</h3>
+          <p class="product-desc">Black vanilla, labdanum, and dark spices — pure luxury in every drop.</p>
+          <div class="product-footer">
+            <span class="product-price">$295</span>
+            <button class="add-btn">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BANNER -->
+  <section class="banner">
+    <div class="banner-text">
+      <h2>The Art of Gifting Fragrance</h2>
+      <p>Every Lumière order arrives in a handcrafted gift box with a personalized wax-sealed note.
+         Complimentary gift wrapping on all orders — no occasion needed.</p>
+    </div>
+    <button class="btn-primary">Shop Gift Sets</button>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="categories">
+    <div class="section-header">
+      <span class="eyebrow">Find Your Scent</span>
+      <h2>Shop by Fragrance Family</h2>
+    </div>
+    <div class="cat-grid">
+      <div class="cat-card">
+        <div class="cat-icon">🌸</div>
+        <h3>Floral</h3>
+        <p>Rose, jasmine, peony & more</p>
+      </div>
+      <div class="cat-card">
+        <div class="cat-icon">🌲</div>
+        <h3>Woody</h3>
+        <p>Sandalwood, cedar & vetiver</p>
+      </div>
+      <div class="cat-card">
+        <div class="cat-icon">🍊</div>
+        <h3>Citrus</h3>
+        <p>Bergamot, lemon & grapefruit</p>
+      </div>
+      <div class="cat-card">
+        <div class="cat-icon">🔥</div>
+        <h3>Oriental</h3>
+        <p>Oud, amber & exotic spices</p>
+      </div>
+      <div class="cat-card">
+        <div class="cat-icon">🌊</div>
+        <h3>Fresh &amp; Aquatic</h3>
+        <p>Sea breeze, musk & mint</p>
+      </div>
+      <div class="cat-card">
+        <div class="cat-icon">🍫</div>
+        <h3>Gourmand</h3>
+        <p>Vanilla, caramel & cocoa</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="section-header">
+      <span class="eyebrow">Reviews</span>
+      <h2>What Our Customers Say</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Nuit de Paris is unlike anything I've worn before. I get compliments every single time — people stop me to ask what fragrance I'm wearing."</blockquote>
+        <span class="testi-author">— Sophie L., New York</span>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"The packaging alone is a gift. Velvet Noir arrived beautifully wrapped and the scent is absolutely intoxicating — worth every penny."</blockquote>
+        <span class="testi-author">— James R., London</span>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"I ordered the sampler set and fell in love with Rose Impériale. Luminous, long-lasting, and just utterly beautiful. Lumière has a customer for life."</blockquote>
+        <span class="testi-author">— Camille D., Paris</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter">
+    <h2>Discover Scents Before Anyone Else</h2>
+    <p>Join our inner circle for early access to new launches, exclusive offers, and fragrance stories.</p>
+    <form class="newsletter-form" onsubmit="return false;">
+      <input type="email" placeholder="Your email address" />
+      <button type="submit">Subscribe</button>
+    </form>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="logo">Lumière</span>
+        <p>Crafting exceptional fragrances since 2010. Every bottle is a small act of alchemy.</p>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="#">New Arrivals</a></li>
+          <li><a href="#">Bestsellers</a></li>
+          <li><a href="#">Gift Sets</a></li>
+          <li><a href="#">Sample Kit</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#">Ingredients</a></li>
+          <li><a href="#">Sustainability</a></li>
+          <li><a href="#">Journal</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Shipping & Returns</a></li>
+          <li><a href="#">Track Order</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Lumière Fine Fragrances. All rights reserved.
+    </div>
+  </footer>
+
+</body>
+</html>
